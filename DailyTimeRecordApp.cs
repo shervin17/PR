@@ -40,6 +40,7 @@ namespace PayrollV3
 
         private void button1_Click(object sender, EventArgs e)
         {
+            //time in time out
             current_employee_id = 0;
 
             if (!validateLogins())
@@ -49,9 +50,7 @@ namespace PayrollV3
             }
             TimeSpan start = shift_start.getTimeSpan();
             TimeSpan end_of_shift = shift_to.getTimeSpan();
-
-            string username = username_field.Text;
-            string password = password_field.Text;
+    
             DateTime current_date = DateTime.Now.Date;
 
            DailyTimeRecord dtr = GetDailyTimeRecord(current_employee_id, current_date);
@@ -61,7 +60,7 @@ namespace PayrollV3
                 TimeSpan start_of_shift = shift_start.getTimeSpan();
                 TimeSpan eos= shift_to.getTimeSpan();
                 DateTime dateTimeStart = DateTime.Now.Date.Add(start_of_shift);
-                DateTime dateTimeEnd = DateTime.Now.Add(end_of_shift);
+                DateTime dateTimeEnd = DateTime.Now.Date.Add(end_of_shift);
 
                 dtr = new DailyTimeRecord {
                     Employee_id = current_employee_id,
@@ -88,7 +87,7 @@ namespace PayrollV3
                 TimeSpan start_of_shift = shift_start.getTimeSpan();
                 TimeSpan eos = shift_to.getTimeSpan();
                 DateTime dateTimeStart = DateTime.Now.Date.Add(start_of_shift);
-                DateTime dateTimeEnd = DateTime.Now.Add(end_of_shift); //ignore
+                DateTime dateTimeEnd = DateTime.Now.Date.Add(end_of_shift); 
                 DialogResult dialogResult = MessageBox.Show("You are about to time out. Do you wish to continue?", "Timeout", MessageBoxButtons.OKCancel, MessageBoxIcon.Exclamation);
                 if (dialogResult == DialogResult.Cancel) {
                     return; }
@@ -194,6 +193,10 @@ namespace PayrollV3
             ONGOING,
             COMPLETE,
         }
-        
+
+        private void shift_start_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

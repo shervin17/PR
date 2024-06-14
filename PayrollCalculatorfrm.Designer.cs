@@ -32,32 +32,28 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
+            this.zz = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
-            this.days_of_work_Field = new System.Windows.Forms.TextBox();
+            this.Pays_From_holiday_field = new System.Windows.Forms.TextBox();
             this.Holiday_Credited_field = new System.Windows.Forms.TextBox();
             this.Special_Hol_field = new System.Windows.Forms.TextBox();
             this.PayableOTmin_Field = new System.Windows.Forms.TextBox();
             this.OvertimePay_field = new System.Windows.Forms.TextBox();
-            this.days_absent_field = new System.Windows.Forms.TextBox();
-            this.TotalMinsLate_field = new System.Windows.Forms.TextBox();
+            this.days_present_Field = new System.Windows.Forms.TextBox();
             this.DeductibleLateMins_Field = new System.Windows.Forms.TextBox();
             this.Deduction_due_toLate_field = new System.Windows.Forms.TextBox();
-            this.TotalUnderTimeMins_Field = new System.Windows.Forms.TextBox();
             this.Deductible_under_time_mins_field = new System.Windows.Forms.TextBox();
             this.Deduction_due_to_underTimeField = new System.Windows.Forms.TextBox();
             this.Semi_Monthly_Salary_field = new System.Windows.Forms.TextBox();
-            this.GrossPayField = new System.Windows.Forms.TextBox();
+            this.balance_field = new System.Windows.Forms.TextBox();
             this.label16 = new System.Windows.Forms.Label();
             this.label17 = new System.Windows.Forms.Label();
             this.WithHoldingTaxField = new System.Windows.Forms.TextBox();
@@ -93,6 +89,8 @@
             this.button6 = new System.Windows.Forms.Button();
             this.button7 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
+            this.subject_to_witholdimg = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.VL_numeric)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.SL_numeric)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Emergency_Leave_numeric)).BeginInit();
@@ -128,52 +126,34 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(471, 110);
+            this.label3.Location = new System.Drawing.Point(97, 120);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(89, 16);
+            this.label3.Size = new System.Drawing.Size(88, 16);
             this.label3.TabIndex = 7;
-            this.label3.Text = "Days absent: ";
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(466, 147);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(94, 16);
-            this.label4.TabIndex = 8;
-            this.label4.Text = "Total mins late";
+            this.label3.Text = "Days Present";
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(426, 181);
+            this.label5.Location = new System.Drawing.Point(531, 151);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(134, 16);
+            this.label5.Size = new System.Drawing.Size(29, 16);
             this.label5.TabIndex = 9;
-            this.label5.Text = "Deductible late mins: ";
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(423, 253);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(137, 16);
-            this.label6.TabIndex = 10;
-            this.label6.Text = "Total underTime mins";
+            this.label5.Text = "late";
             // 
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(386, 286);
+            this.label7.Location = new System.Drawing.Point(494, 222);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(174, 16);
+            this.label7.Size = new System.Drawing.Size(66, 16);
             this.label7.TabIndex = 11;
-            this.label7.Text = "Deductible under time mins: ";
+            this.label7.Text = "undertime";
             // 
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(427, 219);
+            this.label8.Location = new System.Drawing.Point(427, 187);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(133, 16);
             this.label8.TabIndex = 12;
@@ -182,20 +162,20 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(390, 319);
+            this.label9.Location = new System.Drawing.Point(390, 256);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(170, 16);
             this.label9.TabIndex = 13;
             this.label9.Text = "Deduction due to undertime";
             // 
-            // label10
+            // zz
             // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(30, 110);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(156, 16);
-            this.label10.TabIndex = 14;
-            this.label10.Text = "Payroll period no of days";
+            this.zz.AutoSize = true;
+            this.zz.Location = new System.Drawing.Point(476, 114);
+            this.zz.Name = "zz";
+            this.zz.Size = new System.Drawing.Size(84, 16);
+            this.zz.TabIndex = 14;
+            this.zz.Text = "Holiday_pay";
             // 
             // label11
             // 
@@ -218,11 +198,11 @@
             // label13
             // 
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(75, 216);
+            this.label13.Location = new System.Drawing.Point(88, 219);
             this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(111, 16);
+            this.label13.Size = new System.Drawing.Size(97, 16);
             this.label13.TabIndex = 17;
-            this.label13.Text = "Payable OT mins";
+            this.label13.Text = "Overtime hours";
             // 
             // label14
             // 
@@ -242,12 +222,12 @@
             this.label15.TabIndex = 19;
             this.label15.Text = "Semi Monthly Salary";
             // 
-            // days_of_work_Field
+            // Pays_From_holiday_field
             // 
-            this.days_of_work_Field.Location = new System.Drawing.Point(192, 107);
-            this.days_of_work_Field.Name = "days_of_work_Field";
-            this.days_of_work_Field.Size = new System.Drawing.Size(163, 22);
-            this.days_of_work_Field.TabIndex = 20;
+            this.Pays_From_holiday_field.Location = new System.Drawing.Point(566, 114);
+            this.Pays_From_holiday_field.Name = "Pays_From_holiday_field";
+            this.Pays_From_holiday_field.Size = new System.Drawing.Size(163, 22);
+            this.Pays_From_holiday_field.TabIndex = 20;
             // 
             // Holiday_Credited_field
             // 
@@ -277,51 +257,37 @@
             this.OvertimePay_field.Size = new System.Drawing.Size(163, 22);
             this.OvertimePay_field.TabIndex = 24;
             // 
-            // days_absent_field
+            // days_present_Field
             // 
-            this.days_absent_field.Location = new System.Drawing.Point(566, 107);
-            this.days_absent_field.Name = "days_absent_field";
-            this.days_absent_field.Size = new System.Drawing.Size(163, 22);
-            this.days_absent_field.TabIndex = 25;
-            // 
-            // TotalMinsLate_field
-            // 
-            this.TotalMinsLate_field.Location = new System.Drawing.Point(566, 144);
-            this.TotalMinsLate_field.Name = "TotalMinsLate_field";
-            this.TotalMinsLate_field.Size = new System.Drawing.Size(163, 22);
-            this.TotalMinsLate_field.TabIndex = 26;
+            this.days_present_Field.Location = new System.Drawing.Point(192, 117);
+            this.days_present_Field.Name = "days_present_Field";
+            this.days_present_Field.Size = new System.Drawing.Size(163, 22);
+            this.days_present_Field.TabIndex = 25;
             // 
             // DeductibleLateMins_Field
             // 
-            this.DeductibleLateMins_Field.Location = new System.Drawing.Point(566, 181);
+            this.DeductibleLateMins_Field.Location = new System.Drawing.Point(566, 147);
             this.DeductibleLateMins_Field.Name = "DeductibleLateMins_Field";
             this.DeductibleLateMins_Field.Size = new System.Drawing.Size(163, 22);
             this.DeductibleLateMins_Field.TabIndex = 27;
             // 
             // Deduction_due_toLate_field
             // 
-            this.Deduction_due_toLate_field.Location = new System.Drawing.Point(566, 216);
+            this.Deduction_due_toLate_field.Location = new System.Drawing.Point(566, 181);
             this.Deduction_due_toLate_field.Name = "Deduction_due_toLate_field";
             this.Deduction_due_toLate_field.Size = new System.Drawing.Size(163, 22);
             this.Deduction_due_toLate_field.TabIndex = 28;
             // 
-            // TotalUnderTimeMins_Field
-            // 
-            this.TotalUnderTimeMins_Field.Location = new System.Drawing.Point(566, 250);
-            this.TotalUnderTimeMins_Field.Name = "TotalUnderTimeMins_Field";
-            this.TotalUnderTimeMins_Field.Size = new System.Drawing.Size(163, 22);
-            this.TotalUnderTimeMins_Field.TabIndex = 29;
-            // 
             // Deductible_under_time_mins_field
             // 
-            this.Deductible_under_time_mins_field.Location = new System.Drawing.Point(566, 286);
+            this.Deductible_under_time_mins_field.Location = new System.Drawing.Point(569, 219);
             this.Deductible_under_time_mins_field.Name = "Deductible_under_time_mins_field";
             this.Deductible_under_time_mins_field.Size = new System.Drawing.Size(163, 22);
             this.Deductible_under_time_mins_field.TabIndex = 30;
             // 
             // Deduction_due_to_underTimeField
             // 
-            this.Deduction_due_to_underTimeField.Location = new System.Drawing.Point(566, 319);
+            this.Deduction_due_to_underTimeField.Location = new System.Drawing.Point(566, 250);
             this.Deduction_due_to_underTimeField.Name = "Deduction_due_to_underTimeField";
             this.Deduction_due_to_underTimeField.Size = new System.Drawing.Size(163, 22);
             this.Deduction_due_to_underTimeField.TabIndex = 31;
@@ -333,21 +299,21 @@
             this.Semi_Monthly_Salary_field.Size = new System.Drawing.Size(163, 22);
             this.Semi_Monthly_Salary_field.TabIndex = 32;
             // 
-            // GrossPayField
+            // balance_field
             // 
-            this.GrossPayField.Location = new System.Drawing.Point(566, 494);
-            this.GrossPayField.Name = "GrossPayField";
-            this.GrossPayField.Size = new System.Drawing.Size(163, 22);
-            this.GrossPayField.TabIndex = 33;
+            this.balance_field.Location = new System.Drawing.Point(566, 494);
+            this.balance_field.Name = "balance_field";
+            this.balance_field.Size = new System.Drawing.Size(163, 22);
+            this.balance_field.TabIndex = 33;
             // 
             // label16
             // 
             this.label16.AutoSize = true;
             this.label16.Location = new System.Drawing.Point(493, 500);
             this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(67, 16);
+            this.label16.Size = new System.Drawing.Size(57, 16);
             this.label16.TabIndex = 34;
-            this.label16.Text = "GrossPay";
+            this.label16.Text = "Balance";
             // 
             // label17
             // 
@@ -602,7 +568,7 @@
             // label31
             // 
             this.label31.AutoSize = true;
-            this.label31.Location = new System.Drawing.Point(6, 579);
+            this.label31.Location = new System.Drawing.Point(6, 576);
             this.label31.Name = "label31";
             this.label31.Size = new System.Drawing.Size(165, 16);
             this.label31.TabIndex = 64;
@@ -645,11 +611,29 @@
             this.button3.UseVisualStyleBackColor = true;
             this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
+            // subject_to_witholdimg
+            // 
+            this.subject_to_witholdimg.Location = new System.Drawing.Point(181, 741);
+            this.subject_to_witholdimg.Name = "subject_to_witholdimg";
+            this.subject_to_witholdimg.Size = new System.Drawing.Size(163, 22);
+            this.subject_to_witholdimg.TabIndex = 69;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(73, 744);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(99, 16);
+            this.label4.TabIndex = 70;
+            this.label4.Text = "subject to wt tax";
+            // 
             // PayrollCalculatorfrm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(783, 848);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.subject_to_witholdimg);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.button7);
             this.Controls.Add(this.button6);
@@ -685,32 +669,28 @@
             this.Controls.Add(this.WithHoldingTaxField);
             this.Controls.Add(this.label17);
             this.Controls.Add(this.label16);
-            this.Controls.Add(this.GrossPayField);
+            this.Controls.Add(this.balance_field);
             this.Controls.Add(this.Semi_Monthly_Salary_field);
             this.Controls.Add(this.Deduction_due_to_underTimeField);
             this.Controls.Add(this.Deductible_under_time_mins_field);
-            this.Controls.Add(this.TotalUnderTimeMins_Field);
             this.Controls.Add(this.Deduction_due_toLate_field);
             this.Controls.Add(this.DeductibleLateMins_Field);
-            this.Controls.Add(this.TotalMinsLate_field);
-            this.Controls.Add(this.days_absent_field);
+            this.Controls.Add(this.days_present_Field);
             this.Controls.Add(this.OvertimePay_field);
             this.Controls.Add(this.PayableOTmin_Field);
             this.Controls.Add(this.Special_Hol_field);
             this.Controls.Add(this.Holiday_Credited_field);
-            this.Controls.Add(this.days_of_work_Field);
+            this.Controls.Add(this.Pays_From_holiday_field);
             this.Controls.Add(this.label15);
             this.Controls.Add(this.label14);
             this.Controls.Add(this.label13);
             this.Controls.Add(this.label12);
             this.Controls.Add(this.label11);
-            this.Controls.Add(this.label10);
+            this.Controls.Add(this.zz);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.label7);
-            this.Controls.Add(this.label6);
             this.Controls.Add(this.label5);
-            this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
@@ -732,32 +712,28 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Label zz;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Label label15;
-        private System.Windows.Forms.TextBox days_of_work_Field;
+        private System.Windows.Forms.TextBox Pays_From_holiday_field;
         private System.Windows.Forms.TextBox Holiday_Credited_field;
         private System.Windows.Forms.TextBox Special_Hol_field;
         private System.Windows.Forms.TextBox PayableOTmin_Field;
         private System.Windows.Forms.TextBox OvertimePay_field;
-        private System.Windows.Forms.TextBox days_absent_field;
-        private System.Windows.Forms.TextBox TotalMinsLate_field;
+        private System.Windows.Forms.TextBox days_present_Field;
         private System.Windows.Forms.TextBox DeductibleLateMins_Field;
         private System.Windows.Forms.TextBox Deduction_due_toLate_field;
-        private System.Windows.Forms.TextBox TotalUnderTimeMins_Field;
         private System.Windows.Forms.TextBox Deductible_under_time_mins_field;
         private System.Windows.Forms.TextBox Deduction_due_to_underTimeField;
         private System.Windows.Forms.TextBox Semi_Monthly_Salary_field;
-        private System.Windows.Forms.TextBox GrossPayField;
+        private System.Windows.Forms.TextBox balance_field;
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.TextBox WithHoldingTaxField;
@@ -793,5 +769,7 @@
         private System.Windows.Forms.Button button6;
         private System.Windows.Forms.Button button7;
         private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.TextBox subject_to_witholdimg;
+        private System.Windows.Forms.Label label4;
     }
 }

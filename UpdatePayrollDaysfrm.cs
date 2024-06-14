@@ -28,9 +28,10 @@ namespace PayrollV3
         private void UpdatePayrollDaysfrm_Load(object sender, EventArgs e)
         {
             comboBox1.SelectedIndex = 0;
-            dayTypeCb.SelectedIndex = 3;
             selected = comboBox1.SelectedItem as PayrollPeriod;
         }
+
+       
 
         private void dataGridView1_RowHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
@@ -60,6 +61,9 @@ namespace PayrollV3
 
               int result= EmployeeCalendarDatesRepo.Instance().AddAll(calendarDates);
                 MessageBox.Show($"{result} rows added");
+                dataGridView1.DataSource = null;
+                calendarDates.Clear();
+
             }
             catch(Exception ex)
             {
@@ -78,6 +82,26 @@ namespace PayrollV3
         private void button1_Click(object sender, EventArgs e)
         {
             //add to draft button
+            if (dayTypeCb.SelectedItem == null) {
+                MessageBox.Show("holiday type cannot be null");
+                    return;
+            }
+            if (calendarDates.Count != 0)
+            {
+                DateTime toBeCompared = dateTimePicker1.Value.Date;
+
+                for (int i = 0; i < calendarDates.Count; i++)
+                {
+                    if (calendarDates[i].Date.Date == toBeCompared)
+                    {
+                        MessageBox.Show("Date conflicts with those in the list");
+                        return;
+                    }
+                }
+            }
+
+
+
             var employee_calendar_date = new EmployeeCalendarDates
             {
                 Payroll_period_id = selected.Payroll_period_id,
@@ -86,7 +110,22 @@ namespace PayrollV3
             };
             dataGridView1.DataSource = null;
             calendarDates.Add(employee_calendar_date);
+
             dataGridView1.DataSource = calendarDates;
+            if (dataGridView1.Columns.Count > 0)
+            {
+                dataGridView1.Columns[0].Visible = false;
+            }
+        }
+
+        private void comboBox1_SelectedIndexChanged_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void dayTypeCb_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

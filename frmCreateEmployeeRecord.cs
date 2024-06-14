@@ -26,17 +26,19 @@ namespace PayrollV3
         {
             //Adding an employee record
 
-            ValidateFields();
-            addEmployeeRecord();
-            PopulateDGV();
+            if(ValidateFields()){
+                addEmployeeRecord();
+                PopulateDGV();
+            }
+
         }
 
         private void PopulateDGV()
         {
             using (SqlConnection conn = DBConnection.getConnection()) {
 
-                string query = "select id, firstname, lastname, middle_name, birthdate, address, position, leaves.date_started from employee inner join leaves on employee.leaves_id = leaves.leaves_id";
-                List<Employee> employees = conn.Query<Employee>(query).ToList();
+                string query = "select id, firstname, lastname, middle_name, birthdate, address, position from employee";
+                List<Employee_instance> employees = conn.Query<Employee_instance>(query).ToList();
                 dgv.DataSource= employees;
                 
             }
@@ -44,10 +46,13 @@ namespace PayrollV3
 
         private bool ValidateFields()
         {
-            
 
-
-            return false;
+            if (PositionCB.SelectedItem == null)
+            {
+                MessageBox.Show("Select position");
+                return false;
+            }
+            return true;
         }
 
         private void addEmployeeRecord() {
@@ -167,8 +172,8 @@ namespace PayrollV3
 
             decimal.TryParse(salary_field.Text, out decimal salary);
 
-            decimal daily_rate = salary / no_days_per_monthly;
-            decimal hourly_rate = daily_rate / regular_shift_hours;
+            decimal daily_rate = Math.Round(salary / no_days_per_monthly,2, MidpointRounding.AwayFromZero);
+            decimal hourly_rate = Math.Round(daily_rate / regular_shift_hours,2,MidpointRounding.AwayFromZero);
 
             return new decimal[] { salary,daily_rate,hourly_rate };
         }
@@ -178,7 +183,6 @@ namespace PayrollV3
             firstname_field.Text = "";
             lastname_field.Text = "";
             middlename_field.Text = "";
-            position_field.Text = "";
             salary_field.Text = "";
             adress_field.Text = "";
         }

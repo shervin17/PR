@@ -16,16 +16,14 @@ namespace PayrollV3
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            /*  Application.Run(new frmCreateEmployeeRecord());*/
-            /*Application.Run(new DailyTimeRecordApp());*/
-            /*Application.Run(new Payrollform());*/
-            /*  Application.Run(new UpdatePayrollDaysfrm());*/
-            /*  Application.Run(new LogForm());*/
-            /*  Application.Run(new Form2());*/
-            /*    Application.Run(new EmployeeLogin());*/
-            /*    Application.Run(new ManageEmployeeLogins());*/
-            /* Application.Run(new AdminLogin());*/
-            Application.Run(new ManForm());
+            Application.Run(new MainForm());
+            /* Application.Run(new DailyTimeRecordApp());*/
+
+        /*    Application.Run(new LogForm());*/
+
+            /*  Application.Run(new AdminLogin());*/
+
+
 
         }
     }

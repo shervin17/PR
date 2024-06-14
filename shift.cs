@@ -36,7 +36,7 @@ namespace PayrollV3
         }
 
         public TimeSpan getTimeSpan() {
-
+                
 
             int hour = int.Parse(hours_option.SelectedItem.ToString());
             int minute = int.Parse(mins_options.SelectedItem.ToString());

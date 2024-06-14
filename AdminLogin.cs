@@ -30,7 +30,7 @@ namespace PayrollV3
                 List<Admin> admins = connection.Query<Admin>(query, obj).ToList();
                 if (admins.Count > 0)
                 {
-                    new Form2().ShowDialog();
+                    new MainForm().ShowDialog();
                     this.Hide();
                 }
                 else

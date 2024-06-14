@@ -15,7 +15,7 @@ namespace PayrollV3
 
         public static PagIbigContribution GetPagIbigContribution(decimal income)
         {
-            decimal contributionRate = income >= 1500m ? EmployeeRateBelow1500 : EmployeeRateAbove1500;
+            decimal contributionRate = income <= 1500m ? EmployeeRateBelow1500 : EmployeeRateAbove1500;
 
             // Calculate employee contribution
             decimal employeeContribution = income * contributionRate;
@@ -32,9 +32,9 @@ namespace PayrollV3
 
             PagIbigContribution pagIbigContribution = new PagIbigContribution()
             {
-                EmployeeShare = Math.Round(employeeContribution, 2),
-                EmployerShare = Math.Round(employerContribution, 2),
-                TotalContribution = Math.Round(totalContribution, 2),
+                EmployeeShare = Math.Round(employeeContribution, 2, MidpointRounding.AwayFromZero),
+                EmployerShare = Math.Round(employerContribution, 2, MidpointRounding.AwayFromZero),
+                TotalContribution = Math.Round(totalContribution, 2, MidpointRounding.AwayFromZero),
             };
 
             return pagIbigContribution;
@@ -47,5 +47,9 @@ namespace PayrollV3
         public decimal EmployeeShare { get; set; }
         public decimal EmployerShare { get; set; }
         public decimal TotalContribution { get; set; }
+        public override string ToString()
+        {
+            return $"PagIbig contribution : Employee Share: {EmployeeShare}, Employer Share: {EmployerShare}, Total Contribution: {TotalContribution}";
+        }
     }
 }

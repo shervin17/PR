@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace PayrollV3
 {
-    public partial class ManForm : Form
+    public partial class MainForm : Form
     {
-        public ManForm()
+        public MainForm()
         {
             InitializeComponent();
             IsMdiContainer = true;

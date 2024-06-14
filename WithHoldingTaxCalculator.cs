@@ -15,33 +15,52 @@ namespace PayrollV3
         public WithholdingTaxCalculator()
         {
 
-            taxBrackets = new List<TaxBracket>();
+/*            taxBrackets = new List<TaxBracket>();
             taxBrackets.Add(new TaxBracket("First", 0m, 250000m, 0m, 0m, 0m));
             taxBrackets.Add(new TaxBracket("Second", 250001m, 400000m, 0m, 0.15m, 0m));
             taxBrackets.Add(new TaxBracket("Third", 400001m, 800000m, 22500m, 0.20m, 22500m));
             taxBrackets.Add(new TaxBracket("Fourth", 800001m, 2000000m, 102500m, 0.25m, 125000m));
             taxBrackets.Add(new TaxBracket("Fifth", 2000001m, 8000000m, 402500m, 0.30m, 527500m));
-            taxBrackets.Add(new TaxBracket("Sixth", 8000001m, decimal.MaxValue, 2202500m, 0.35m, 0m));
+            taxBrackets.Add(new TaxBracket("Sixth", 8000001m, decimal.MaxValue, 2202500m, 0.35m, 0m));*/
 
 
 
         }
         public decimal GetSemiMonthlyTax(decimal semi_monthly_income)
         {
-            decimal approx_annual_income = semi_monthly_income * 24;
-            decimal monthly_tax = 0;
-            taxBrackets.ForEach(bracket =>
-            {
-                if (approx_annual_income > bracket.RangeFrom && approx_annual_income <= bracket.RangeTo)
-                {
+            decimal income = semi_monthly_income;
+            decimal wtax;
 
-                    monthly_tax = (bracket.Base_tax + (approx_annual_income - bracket.RangeFrom) * bracket.Tax_rate) / 24;
-                }
-            });
+            if (income <= 10417)
+                wtax= 0.00m;
+            else if (income <= 16666)
+                wtax= 0.00m + 0.15m * (income - 10417);
+            else if (income <= 33332)
+                wtax= 937.50m + 0.20m * (income - 16667);
+            else if (income <= 83332)
+                wtax= 4270.70m + 0.25m * (income - 33333);
+            else if (income <= 333332)
+                wtax= 16770.70m + 0.30m * (income - 83333);
+            else
+                wtax= 91770.70m + 0.35m * (income - 333333);
 
-            Debug.WriteLine("" + semi_monthly_income + " " + approx_annual_income + " " + monthly_tax);
 
-            return Math.Round(monthly_tax, 3);
+            return Math.Round(wtax,2, MidpointRounding.AwayFromZero);
+
+            /* decimal approx_annual_income = semi_monthly_income * 24;
+             decimal monthly_tax = 0;
+             taxBrackets.ForEach(bracket =>
+             {
+                 if (approx_annual_income > bracket.RangeFrom && approx_annual_income <= bracket.RangeTo)
+                 {
+
+                     monthly_tax = (bracket.Base_tax + (approx_annual_income - bracket.RangeFrom) * bracket.Tax_rate) / 24;
+                 }
+             });
+
+             Debug.WriteLine("" + semi_monthly_income + " " + approx_annual_income + " " + monthly_tax);
+
+             return Math.Round(monthly_tax, 3);*/
         }
 
 

@@ -23,9 +23,9 @@ namespace PayrollV3
 
             PhilHealthContribution philHealthContribution = new PhilHealthContribution()
             {
-                EmployerShare = Math.Round(contribution / 2, 2),
-                EmployeeShare = Math.Round(contribution / 2, 2),
-                TotalContribution = Math.Round(contribution, 2),
+                EmployerShare = Math.Round(contribution / 2, 2, MidpointRounding.AwayFromZero),
+                EmployeeShare = Math.Round(contribution / 2, 2, MidpointRounding.AwayFromZero),
+                TotalContribution = Math.Round(contribution, 2, MidpointRounding.AwayFromZero),
 
             };
 
@@ -41,5 +41,9 @@ namespace PayrollV3
         public decimal EmployeeShare { get; set; }
         public decimal TotalContribution { get; set; }
 
+        public override string ToString()
+        {
+            return $" PhilHealth Contribution : Employee Share: {EmployeeShare}, Employer Share: {EmployerShare}, Total Contribution: {TotalContribution}";
+        }
     }
 }

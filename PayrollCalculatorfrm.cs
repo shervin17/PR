@@ -24,7 +24,7 @@ namespace PayrollV3
         private Leaves for_update_leaves;
         private int allowed_leaves;
         private int no_leaves_to_be_used;
-        private decimal grosspay;
+        private decimal balance;
         private decimal semi_monthly;
         private decimal adjustments;
         private decimal overTimePay;
@@ -32,13 +32,16 @@ namespace PayrollV3
         private decimal withHoldingTax;
         private decimal netpay;
         private decimal total_benefits_deduction;
-        private decimal final_net_pay;
+       
         //benefits
         private SSSContribution sssContribution;
         private PhilHealthContribution philHealthContribution;
         private PagIbigContribution pagIbigContribution;
-        
-
+        private decimal prev_grosspay;
+        private decimal Hol_pay;
+        private decimal subject_to_wt_Tax;
+        private bool isWTaxcomputed;
+        private decimal final_net_pay;
 
         public PayrollCalculatorfrm(Employee employee)
         {
@@ -80,7 +83,9 @@ namespace PayrollV3
 
             payrollObj = new Payroll(daily_time_records, payable_Dates,payrollDetails,over_time_entries);
             attendanceSummary = payrollObj.GetAttendanceSummary();
-            semi_monthly = Math.Round(payrollDetails.Salary / 2, 2);
+            Debug.WriteLine(attendanceSummary.ToString());
+            semi_monthly = payrollObj.Semi_monthly;
+            Hol_pay = payrollObj.Holidays_pay;
             populateFields();
 
             if (over_time_entries.Count > 0)
@@ -88,31 +93,34 @@ namespace PayrollV3
                 decimal []  OTinfo= payrollObj.getOTComputation();
                 payableOTinMins = OTinfo[0];
                 overTimePay = OTinfo[1];
-
-                PayableOTmin_Field.Text = payableOTinMins.ToString();
+                decimal OT_hours = payableOTinMins / 60;
+                PayableOTmin_Field.Text = OT_hours.ToString();
                 OvertimePay_field.Text = overTimePay.ToString();
             }
 
-            allowed_leaves = attendanceSummary.NumberOfAbsents == 0? 5: attendanceSummary.NumberOfAbsents + 5;
+           
+            int number_of_absents = 15 -attendanceSummary.NumberOfPresents;
 
-            grosspay = semi_monthly + overTimePay - (attendanceSummary.DeductionDueToLate + attendanceSummary.DeductionDueToUndertime);
-            GrossPayField.Text= grosspay.ToString();
+            allowed_leaves = number_of_absents == 0? 5:number_of_absents + 5;
+            Hol_pay = payrollObj.Holidays_pay;
+            balance = semi_monthly + overTimePay +Hol_pay - (attendanceSummary.DeductionDueToLate + attendanceSummary.DeductionDueToUndertime);
+            balance_field.Text= balance.ToString();
         }
 
         public void populateFields() 
         {
-         days_of_work_Field.Text= payable_Dates.Count.ToString();
+         
+
+         Pays_From_holiday_field.Text= Hol_pay.ToString();
          Holiday_Credited_field.Text= attendanceSummary.HolidayCredited.ToString();
          Special_Hol_field.Text=attendanceSummary.SpecialHolidayCredited.ToString();
-         PayableOTmin_Field.Text = " ";
-         OvertimePay_field.Text = " ";
+         PayableOTmin_Field.Text = "0";
+         OvertimePay_field.Text = "0";
          Semi_Monthly_Salary_field.Text= semi_monthly.ToString();
-         days_absent_field.Text= attendanceSummary.NumberOfAbsents.ToString();
-         TotalMinsLate_field.Text=attendanceSummary.TotalMinsLate.ToString();
-         DeductibleLateMins_Field.Text= attendanceSummary.DeductibleMinsLate.ToString();
+         days_present_Field.Text= attendanceSummary.NumberOfPresents.ToString();
+         DeductibleLateMins_Field.Text= (attendanceSummary.DeductibleMinsLate/60m).ToString();
          Deduction_due_toLate_field.Text= attendanceSummary.DeductionDueToLate.ToString();
-         TotalUnderTimeMins_Field.Text=attendanceSummary.TotalUndertimeMins.ToString();
-         Deductible_under_time_mins_field.Text = attendanceSummary.DeductibleUndertimeMins.ToString();
+         Deductible_under_time_mins_field.Text = (attendanceSummary.DeductibleUndertimeMins / 60m).ToString();
          Deduction_due_to_underTimeField.Text = attendanceSummary.DeductionDueToUndertime.ToString();
 
             VL_numeric.Maximum = leaves.Remaining_VL;
@@ -174,41 +182,43 @@ namespace PayrollV3
         }
         private void updateGrossPay() {
 
-            grosspay = semi_monthly + overTimePay + adjustments -( attendanceSummary.DeductionDueToLate + attendanceSummary.DeductionDueToUndertime);
-            GrossPayField.Text= grosspay.ToString();
+            balance = semi_monthly + overTimePay + adjustments -( attendanceSummary.DeductionDueToLate + attendanceSummary.DeductionDueToUndertime);
+            balance_field.Text= balance.ToString();
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
+            //compute withholding tax btn
             WithholdingTaxCalculator withholdingTaxCalculator = new WithholdingTaxCalculator();
 
-            withHoldingTax = withholdingTaxCalculator.GetSemiMonthlyTax( grosspay );
+            withHoldingTax = withholdingTaxCalculator.GetSemiMonthlyTax( subject_to_wt_Tax );
 
             WithHoldingTaxField.Text= withHoldingTax.ToString();
         }
 
         private void button6_Click(object sender, EventArgs e)
         {
-            //computeNetpay
-            if (netpay != 0)
-            {
-                netpay = netpay - withHoldingTax;
-            }
-            else {
-                netpay = grosspay - withHoldingTax;
-            }
+            //compute netpay button
+            netpay = balance - total_benefits_deduction - withHoldingTax;
+
+
             netPayField.Text= netpay.ToString();
         }
 
         private void button7_Click(object sender, EventArgs e)
         {
             //compute benefits
-            decimal prev_grosspay = 25000m;
-            decimal monthly_grosspay = prev_grosspay + grosspay;
-            
+            decimal.TryParse(Previous_Grosspay_field.Text, out decimal value);
+            if (value > 0) { prev_grosspay = value; }
+            decimal monthly_grosspay = prev_grosspay + balance;
+            Debug.WriteLine($"balace {monthly_grosspay}");
+
             pagIbigContribution = PagIbigContributionCalculator.GetPagIbigContribution( monthly_grosspay );
             philHealthContribution = PhilHealthContribCalculator.GetPhilHealthContribution(monthly_grosspay);
             sssContribution = SSSContributionCalculator.ComputeSSSContribution( monthly_grosspay );
+            Debug.WriteLine(pagIbigContribution.ToString());
+            Debug.WriteLine(philHealthContribution.ToString());
+            Debug.WriteLine(sssContribution.ToString());
 
             total_benefits_deduction = pagIbigContribution.EmployeeShare + philHealthContribution.EmployeeShare + sssContribution.EmployeeShare;
 
@@ -223,8 +233,17 @@ namespace PayrollV3
 
         private void button2_Click(object sender, EventArgs e)
         {
-            netpay = grosspay - total_benefits_deduction;
-            MessageBox.Show($"current netpay excluding withHolding tax: {netpay}");
+           
+            if (total_benefits_deduction == 0)
+            {
+
+                subject_to_wt_Tax = balance;
+            }
+            else
+            {  subject_to_wt_Tax= Math.Round(balance - total_benefits_deduction); }
+
+            subject_to_witholdimg.Text = subject_to_wt_Tax.ToString();
+            isWTaxcomputed = true;
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -235,13 +254,15 @@ namespace PayrollV3
         private void button4_Click(object sender, EventArgs e)
         {
             //submit
-            if (withHoldingTax == 0) {
+            if (withHoldingTax == 0  && !isWTaxcomputed) {
                 MessageBox.Show("Submitting payroll needs withholding tax computed");
                 return;
             }
-            final_net_pay = grosspay - total_benefits_deduction - withHoldingTax;
+            final_net_pay = balance - total_benefits_deduction - withHoldingTax;
+
+            AddPayrollTransaction();
         }
-        public void AddPayrollTransaction(PayrollTransaction payrollTransaction)
+        public void AddPayrollTransaction()
         {
 
             using (SqlConnection connection = DBConnection.getConnection())
@@ -251,12 +272,14 @@ namespace PayrollV3
                     try
                     {
 
-                        string sqlAttendance = " insert into AttendaceSummary values(@absents,@deductibleMinslate,@deductibleUndertimeMins,@deductionDueToLate,@deductionDueToUndertime,@holidayCredited,@specialHolidayCredited,@totalMinsLate,@totalUndertimeMins);" +
+                        
+
+                        string sqlAttendance = " insert into AttendanceSummary values(@presents,@deductibleMinslate,@deductibleUndertimeMins,@deductionDueToLate,@deductionDueToUndertime,@holidayCredited,@specialHolidayCredited,@totalMinsLate,@totalUndertimeMins);" +
                             " select cast(scope_identity() as int);";
 
                         var attendanceObj = new
                         {
-                            absents = attendanceSummary.NumberOfAbsents,
+                            presents = attendanceSummary.NumberOfPresents,
                             deductibleMinslate = attendanceSummary.DeductibleMinsLate,
                             deductibleUndertimeMins = attendanceSummary.DeductibleUndertimeMins,
                             deductionDueToLate = attendanceSummary.DeductionDueToLate,
@@ -276,17 +299,32 @@ namespace PayrollV3
 
                         //
                         string pagIbiginsert = "insert into PagibigContribution values (@employeeShare,@employerShare,@TotalContribution); select cast(scope_identity() as int);";
-
-  
                       
                         int pagIbig_new_id = connection.QuerySingle<int>(pagIbiginsert, pagIbigContribution, transaction);
 
                         string philhealth_insert = "insert into PhilHealthContribution values (@employeeShare,@employerShare,@TotalContribution); select cast(scope_identity() as int);";
 
-                        int philhealt_new_id = connection.QuerySingle<int>(philhealth_insert,pagIbigContribution, transaction);
+                        int philhealth_new_id = connection.QuerySingle<int>(philhealth_insert,pagIbigContribution, transaction);
 
+                        string payrollQuery = " insert into PayrollTransaction values(@emp_id, @payroll_period_id, @attendance, @OTpay , @benefits , @Grosspay,@Wtax,@sss, @pagIbig, @philhealth, @netpay)";
 
+                        var payrollparam = new {
+                            emp_id = employee1.Id,
+                            payroll_period_id = selected.Payroll_period_id,
+                            attendance = attendance_summary_id,
+                            OTpay = overTimePay,
+                            benefits = total_benefits_deduction,
+                            Grosspay = balance,
+                            Wtax = withHoldingTax,
+                            sss = sss_new_id,
+                            pagIbig = pagIbig_new_id,
+                            philhealth = philhealth_new_id,
+                            netpay = netpay,
+                        };
 
+                        connection.Execute(payrollQuery, payrollparam,transaction);
+                        transaction.Commit();
+                        MessageBox.Show("Payroll transaction saved.");
                     }
                     catch (Exception ex)
                     {

@@ -20,9 +20,9 @@ namespace PayrollV3
 
             SSSContribution sssContribution = new SSSContribution
             {
-                EmployerShare = Math.Round(MSC * EmployerShareRate, 2),
-                EmployeeShare = Math.Round(MSC * EmployeeShareRate, 2),
-                TotalContribution = Math.Round(MSC * TotalContributionRate, 2)
+                EmployerShare = Math.Round(MSC * EmployerShareRate, 2, MidpointRounding.AwayFromZero),
+                EmployeeShare = Math.Round(MSC * EmployeeShareRate, 2, MidpointRounding.AwayFromZero),
+                TotalContribution = Math.Round(MSC * TotalContributionRate, 2, MidpointRounding.AwayFromZero)
             };
 
             return sssContribution;
@@ -35,5 +35,10 @@ namespace PayrollV3
         public decimal EmployeeShare { get; set; }
         public decimal EmployerShare { get; set; }
         public decimal TotalContribution { get; set; }
+
+        public override string ToString()
+        {
+            return $" SSSContribution  :Employee Share: {EmployeeShare}, Employer Share: {EmployerShare}, Total Contribution: {TotalContribution}";
+        }
     }
 }
